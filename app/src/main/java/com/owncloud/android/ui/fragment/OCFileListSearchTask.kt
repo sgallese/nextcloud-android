@@ -209,7 +209,14 @@ class OCFileListSearchTask(
             for (obj in data) {
                 try {
                     val remoteFile = obj as? RemoteFile ?: continue
-                    var ocFile = FileStorageUtils.fillOCFile(remoteFile)
+                    val newFile = FileStorageUtils.fillOCFile(remoteFile)
+
+                    val existingFile = storageManager.getFileByPath(newFile.remotePath)
+                    if (existingFile != null) {
+                        preserveLocalFieldsOverEmptyRemoteFile(newFile, existingFile)
+                    }
+
+                    var ocFile = newFile
                     FileStorageUtils.searchForLocalFileInDefaultPath(ocFile, currentUser.accountName)
                     ocFile = storageManager.saveFileWithParent(ocFile, activity)
                     ocFile = handleEncryptionIfNeeded(ocFile, storageManager, activity)
@@ -247,6 +254,30 @@ class OCFileListSearchTask(
             preferences.setPhotoSearchTimestamp(System.currentTimeMillis())
             storageManager.saveVirtuals(contentValuesList)
         }
+
+    /**
+     * Needed to prevent overwriting the valid local fields.
+     */
+    private fun preserveLocalFieldsOverEmptyRemoteFile(newFile: OCFile, existingFile: OCFile) {
+        if (newFile.sharees.isNullOrEmpty()) {
+            newFile.sharees = existingFile.sharees
+        }
+        if (!newFile.isSharedViaLink) {
+            newFile.isSharedViaLink = existingFile.isSharedViaLink
+        }
+        if (!newFile.isSharedWithSharee) {
+            newFile.isSharedWithSharee = existingFile.isSharedWithSharee
+        }
+        if (newFile.firstShareTimestamp == 0L) {
+            newFile.firstShareTimestamp = existingFile.firstShareTimestamp
+        }
+        if (newFile.tags.isNullOrEmpty()) {
+            newFile.tags = existingFile.tags
+        }
+        if (newFile.imageDimension == null) {
+            newFile.imageDimension = existingFile.imageDimension
+        }
+    }
 
     @Suppress("DEPRECATION")
     private fun handleEncryptionIfNeeded(
