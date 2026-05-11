@@ -86,6 +86,7 @@ stateless4jVersion = "2.6.0"
 webkitVersion = "1.15.0"
 workRuntime = "2.11.2"
 foundationVersion = "1.10.6"
+kotlinxCoroutinesTestVersion = "1.11.0"
 
 [libraries]
 # Crypto
@@ -116,6 +117,7 @@ androidsvg = { module = "com.caverock:androidsvg", version.ref = "androidsvgVers
 coil = { module = "io.coil-kt:coil", version.ref = "coilVersion" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
 emoji-google = { module = "com.vanniktech:emoji-google", version.ref = "emojiGoogleVersion" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTestVersion" }
 
 # kotlinx
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
