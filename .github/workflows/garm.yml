@@ -30,7 +30,7 @@ jobs:
                 server: [ stable22, stable33, master ]
                 api-level: [ 29 ] # [ 21, 36 ]
         steps:
-            -   uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+            -   uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
             -   name: configure server
                 run: |
@@ -45,7 +45,7 @@ jobs:
                     docker exec server /usr/local/bin/run.sh
 
             -   name: set up JDK 21
-                uses: actions/setup-java@8df1039502a15bceb9433410b1a100fbe190c53b # v4.5.0
+                uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
                 with:
                     distribution: "temurin"
                     java-version: 21
@@ -71,8 +71,10 @@ jobs:
             -   name: Configure gradle daemon
                 run: |
                     mkdir -p $HOME/.gradle
-                    echo "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError" > $HOME/.gradle/gradle.properties
+                    echo "org.gradle.jvmargs=-Xmx6g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -XX:+UseParallelGC -XX:MaxMetaspaceSize=1g" >> $HOME/.gradle/gradle.properties
                     echo "org.gradle.caching=true" >> $HOME/.gradle/gradle.properties
+                    echo "org.gradle.parallel=true" >> $HOME/.gradle/gradle.properties
+                    echo "org.gradle.configureondemand=true" >> $HOME/.gradle/gradle.properties
 
             -   name: Build gplay
                 run: |
