@@ -8,6 +8,7 @@ DRONE_PULL_REQUEST=$1
 LOG_USERNAME=$2
 LOG_PASSWORD=$3
 DRONE_BUILD_NUMBER=$4
+BRANCH=$5
 
 function upload_logcat() {
     log_filename="${DRONE_PULL_REQUEST}_logcat.txt.xz"
@@ -19,7 +20,7 @@ function upload_logcat() {
     echo >&2 "Uploaded logcat to https://www.kaminsky.me/nc-dev/android-logcat/$log_filename"
 }
 
-scripts/deleteOldComments.sh "master" "IT" "$DRONE_PULL_REQUEST"
+scripts/deleteOldComments.sh "$BRANCH" "IT" "$DRONE_PULL_REQUEST"
 
 ./gradlew assembleGplayDebugAndroidTest
 
@@ -42,7 +43,7 @@ kill $LOGCAT_PID
 
 if [ ! $stat -eq 0 ]; then
     upload_logcat
-    bash scripts/uploadReport.sh "$LOG_USERNAME" "$LOG_PASSWORD" "$DRONE_BUILD_NUMBER" "master" "IT" "$DRONE_PULL_REQUEST"
+    bash scripts/uploadReport.sh "$LOG_USERNAME" "$LOG_PASSWORD" "$DRONE_BUILD_NUMBER" "$BRANCH" "IT" "$DRONE_PULL_REQUEST"
 fi
 
 curl -Os https://uploader.codecov.io/latest/linux/codecov
