@@ -394,6 +394,7 @@ dependencies {
     androidTestImplementation(libs.rules)
     androidTestImplementation(libs.runner)
     androidTestUtil(libs.orchestrator)
+    androidTestImplementation(libs.test.core)
     androidTestImplementation(libs.core.ktx)
     androidTestImplementation(libs.core.testing)
     // endregion
