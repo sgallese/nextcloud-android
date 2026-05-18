@@ -81,7 +81,7 @@ jobs:
                     sdkmanager "cmake;4.1.2"
                     sed -i s#https://server#http://10.0.2.2# gradle.properties
                     sed -i s'#<bool name="is_beta">false</bool>#<bool name="is_beta">true</bool>#'g app/src/main/res/values/setup.xml
-                    ./gradlew assembleDebug
+                    ./gradlew assembleGplayDebug
 
             -   name: wait and ping server
                 run: |
@@ -97,7 +97,7 @@ jobs:
                 with:
                     api-level: ${{ matrix.api-level }}
                     force-avd-creation: false
-                    arch: x86
+                    arch: x86_64
                     sdcard-path-or-size: 100M
                     target: google_apis
                     emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -skin 500x833
