@@ -43,7 +43,6 @@ kill $LOGCAT_PID
 
 if [ ! $stat -eq 0 ]; then
     upload_logcat
-    bash scripts/uploadReport.sh "$LOG_USERNAME" "$LOG_PASSWORD" "$DRONE_BUILD_NUMBER" "$BRANCH" "IT" "$DRONE_PULL_REQUEST"
 fi
 
 curl -Os https://uploader.codecov.io/latest/linux/codecov
