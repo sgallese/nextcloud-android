@@ -27,7 +27,6 @@ scripts/deleteOldComments.sh "$BRANCH" "IT" "$DRONE_PULL_REQUEST"
 scripts/wait_for_emulator.sh || exit 1
 
 ./gradlew installGplayDebugAndroidTest
-scripts/wait_for_server.sh "server" || exit 1
 
 # clear logcat and start saving it to file
 adb logcat -c

@@ -27,7 +27,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                server: [ stable22, stable33, master ]
+                server: [ master ] # [ stable22, stable33, master ]
                 api-level: [ 29 ] # [ 21, 36 ]
         steps:
             -   uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -91,6 +91,8 @@ jobs:
                     done
 
             -   name: gplay
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
                 uses: reactivecircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b # v2.35.0
                 with:
                     api-level: ${{ matrix.api-level }}
