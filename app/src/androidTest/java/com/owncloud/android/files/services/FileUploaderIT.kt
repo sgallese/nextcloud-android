@@ -44,6 +44,9 @@ abstract class FileUploaderIT : AbstractOnServerIT() {
     }
 
     private val powerManagementServiceMock: PowerManagementService = object : PowerManagementService {
+        override val isIgnoringOptimization: Boolean
+            get() = true
+
         override val isPowerSavingEnabled: Boolean
             get() = false
 
